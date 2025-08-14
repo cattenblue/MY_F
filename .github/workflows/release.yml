@@ -56,7 +56,7 @@ jobs:
       - name: Check version
         run: |
           VERSION="${{ github.event.inputs.version }}"
-          CURRENT_VERSION=$(grep "_VERSION_.*'.*'" Boilerplate_!Base/src/lib/Base.lua | sed -E "s/.*'(.*)'.*/\1/")
+          CURRENT_VERSION=$(grep "_VERSION_.*'.*'" MY_!Base/src/lib/Base.lua | sed -E "s/.*'(.*)'.*/\1/")
           python3 -c "
           import semver
           try:
@@ -72,8 +72,8 @@ jobs:
         run: |
           DATE=$(date +%Y%m%d)
           VERSION="${{ github.event.inputs.version }}"
-          sed -i "s/local _BUILD_ *=[^']*'[^']*'/local _BUILD_                 = '${DATE}'/" Boilerplate_!Base/src/lib/Base.lua
-          sed -i "s/local _VERSION_ *=[^']*'[^']*'/local _VERSION_               = '${VERSION}'/" Boilerplate_!Base/src/lib/Base.lua
+          sed -i "s/local _BUILD_ *=[^']*'[^']*'/local _BUILD_                 = '${DATE}'/" MY_!Base/src/lib/Base.lua
+          sed -i "s/local _VERSION_ *=[^']*'[^']*'/local _VERSION_               = '${VERSION}'/" MY_!Base/src/lib/Base.lua
 
       - name: Update CHANGELOG.md
         run: |
@@ -82,7 +82,7 @@ jobs:
           TMPFILE=$(mktemp)
           echo "# 更新日志" > $TMPFILE
           echo "" >> $TMPFILE
-          echo "## Boilerplate插件集 v${VERSION}" >> $TMPFILE
+          echo "## 茗伊插件集 v${VERSION}" >> $TMPFILE
           echo "" >> $TMPFILE
           echo "$CHANGELOG" | tr '|' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | sed 's/^["""]//g' | sed 's/["""]$//g' | sed 's/[：:]/] /g' | sed 's/^/* [/g' >> $TMPFILE
           echo "" >> $TMPFILE
